@@ -12,10 +12,17 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["First item", "Second item", "Third item"]
     
+    let defaults = UserDefaults.standard
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
+        
+        
     }
 
     // Number of rows
@@ -56,6 +63,7 @@ class TodoListViewController: UITableViewController {
             
             // Add item to array
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             // Update tableView
             self.tableView.reloadData()
             
